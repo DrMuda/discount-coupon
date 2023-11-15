@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Discount Coupon"
+client_id = "430caf72a8563b14feacbc61e0742aab"
+application_url = "https://discount-coupon.fly.dev"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_price_rules,write_price_rules"
+
+[auth]
+redirect_urls = [
+  "https://discount-coupon.fly.dev/auth/callback",
+  "https://discount-coupon.fly.dev/auth/shopify/callback",
+  "https://discount-coupon.fly.dev/api/auth/callback",
+  "https://discount-coupon.fly.dev/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+dev_store_url = "revashopdev.myshopify.com"

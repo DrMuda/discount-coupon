@@ -1,0 +1,31 @@
+<head>
+  <script src='{{ 'discount_coupon.js' | asset_url }}' defer></script>
+  {{ 'discount_coupon.css' | asset_url | stylesheet_tag }}
+</head>
+
+{% assign discountCouponCode = block.settings.discountCouponCode | strip %}
+{% assign leftText = block.settings.leftText | strip %}
+<span>
+  {% render 'black_discount_coupon', discountCouponCode: discountCouponCode, leftText: leftText %}
+</span>
+
+{% schema %}
+{
+  "name": "Discount Coupon",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "discountCouponCode",
+      "label": "折扣券码(Discount coupon code)",
+      "default": "请填写折扣券码"
+    },
+    {
+      "type": "text",
+      "id": "leftText",
+      "label": "左侧文本(Left content)",
+      "default": "Buy AED 150.00，AED 20.00 OFF"
+    }
+  ]
+}
+{% endschema %}
