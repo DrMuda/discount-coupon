@@ -1,19 +1,49 @@
 # 项目简介
-shopify 折扣券应用
+
+shopify 折扣券应用块
 
 # 启动项目
+
 ```bash
 pnpm i
 pnpm dev
 ```
 
-首次执行dev后， 会提示登录， 使用shopify账号登录
+首次执行 dev 后， 会提示登录， 使用 shopify 账号登录
 
-然后选择 ` (n) No, connect it to an existing app `
+然后选择 `(n) No, connect it to an existing app`
 
-再选择 ` Discount Coupon (shopify.app.discount-coupon.toml) `
+再选择 `Discount Coupon (shopify.app.discount-coupon.toml)`
 
 之后默认就行
+
+## 应用开发
+
+app 目录下是商店后台的前后端开发， 此项目应用的开发不是重点， 不细讲， 具体查看 [官网文档](https://shopify.dev/docs/apps)
+
+## 应用块(扩展)开发
+
+应用块代码所在目录为 /extensions/discountCoupon, 每个文件夹是一个应用块。
+
+新的应用块可以通过 `pnpm generate extension` 创建
+
+- assets 存放 js 、 css 等资源文件
+- blocks 有点类似于入口文件， 为何如此不大懂
+  - liquid 语法查阅 https://shopify.dev/api/liquid
+  - 此文件可通过 script 标签引入 js， 通过过滤器 asset_url 引入 assets 目录下的文件
+  - 通过过滤器 stylesheet_tag 引入样式文件， 而不是 link 标签
+  - `{% schema %} ... {% endschema %}` 包含的 json.settings 是应用块右侧的配置项, 通过 `{{ block.settings.<id> }}` 使用变量。[input-settings](https://shopify.dev/docs/themes/architecture/settings/input-settings)
+- locales 多语言文案
+- snippets 类似组件
+
+## 部署发布
+
+1. 安装并注册登录 flyctl, 然后找 @laixuexin 加入团队
+2. 应用的部署配置已完成， 在更改应用 前后端代码之后， 执行 `flyctl deploy --remote-only` 即可， 完整步骤看 [部署发布应用](https://shopify.dev/docs/apps/deployment/web)
+3. 应用块并不会随着应用的部署一起部署， 执行 `npm run deploy` 部署并发布一个版本， [此处查阅版本](https://partners.shopify.com/3221843/apps/70746701825/versions), 确保 `活跃` 状态的版本是你新发布的(可通过发布切换版本)。[官网文档](https://shopify.dev/docs/apps/deployment/extension)
+    - 坑：虽然整个项目都是用 pnpm 包管理器， 文档也允许， 但是在部署应用块时， 我使用 `pnpm deploy` 会报错 `No project was selected for deployment`
+
+> 以下是 shopify cli 原文档
 
 # Shopify App Template - Remix
 
