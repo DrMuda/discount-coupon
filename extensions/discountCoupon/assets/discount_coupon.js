@@ -7,26 +7,21 @@ function handleClickApply(discountCouponCode) {
   appliedBtn.className = 'applied btn';
 
   // copy discountCouponCode
-  const input = document.createElement('input');
-  input.innerText = discountCouponCode;
-  input.value = discountCouponCode;
-  document.body.appendChild(input);
-  input.select();
-  document.execCommand('copy');
-  input.remove();
 
-  // show toast
-  const toast = document.createElement('div');
-  toast.innerText = 'Coupon code is successfully copy';
-  if (!toast) return;
-  toast.className = 'copy-success-toast toast-show';
-  document.body.appendChild(toast);
-  setTimeout(() => {
-    toast.setAttribute('style', 'opacity: 0;');
-  }, 2000);
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
+  navigator.clipboard.writeText(discountCouponCode).then(() => {
+    // show toast
+    const toast = document.createElement('div');
+    toast.innerText = 'Coupon code is successfully copy';
+    if (!toast) return;
+    toast.className = 'copy-success-toast toast-show';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.setAttribute('style', 'opacity: 0;');
+    }, 2000);
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  });
 }
 
 // 检测是否为从右到左排版， 并设置相应样式

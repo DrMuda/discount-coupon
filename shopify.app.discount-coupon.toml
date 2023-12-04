@@ -2,7 +2,7 @@
 
 name = "Discount Coupon"
 client_id = "430caf72a8563b14feacbc61e0742aab"
-application_url = "https://discount-coupon.fly.dev"
+application_url = "https://fully-bandwidth-saddam-oldest.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_price_rules,write_price_rules"
 
 [auth]
 redirect_urls = [
-  "https://discount-coupon.fly.dev/auth/callback",
-  "https://discount-coupon.fly.dev/auth/shopify/callback",
-  "https://discount-coupon.fly.dev/api/auth/callback",
-  "https://discount-coupon.fly.dev/.shopify/graphiql/auth/callback"
+  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/auth/callback",
+  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/auth/shopify/callback",
+  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/api/auth/callback",
+  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
@@ -24,4 +24,5 @@ api_version = "2023-10"
 embedded = false
 
 [build]
+automatically_update_urls_on_dev = true
 dev_store_url = "revashopdev.myshopify.com"
