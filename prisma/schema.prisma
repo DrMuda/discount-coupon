@@ -21,10 +21,49 @@ model Session {
   userId      BigInt?
 }
 
-// 已使用的价格规则记录
-model PriceRuleUsedLog{
-  id String @id
-  PriceRuleId String
-  ProductId Int
-  UserEmail String
+model Style {
+  id           Int     @id @default(autoincrement())
+  name         String
+  codeBgColor  String?
+  codeColor    String?
+  textColor    String?
+  btnBgColot   String?
+  btnTextColor String?
+}
+
+model GlobalConfig {
+  id           Int     @id @default(0)
+  shop         String
+  styleId      Int?
+  codeBgColor  String?
+  codeColor    String?
+  textColor    String?
+  btnBgColot   String?
+  btnTextColor String?
+
+  // 排序， 以逗号分隔折扣码id, 以不同方式排序时， 直接计算出准确的排序结果
+  sort String?
+}
+
+model DiscountCode {
+  id   Int    @id @default(autoincrement())
+  shop String
+
+  useGlobalConfig    Boolean @default(true)
+  useInProductDetail Boolean @default(false)
+  useInCart          Boolean @default(false)
+
+  styleId      Int
+  codeBgColor  String?
+  codeColor    String?
+  textColor    String?
+  btnBgColot   String?
+  btnTextColor String?
+
+  bannerBgColor      String?
+  bannerTextColot    String?
+  bannerBtnBgColor   String?
+  bannerBtnTextColor String?
+
+  createdAt DateTime @default(now())
 }

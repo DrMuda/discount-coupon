@@ -17,4 +17,11 @@ module.exports = {
   serverModuleFormat: "cjs",
   dev: { port: process.env.HMR_SERVER_PORT || 8002 },
   future: {},
+  routes(defineRoutes) {
+    return defineRoutes((route) => {
+      route("/api/discountCode/getAll", "api/discountCode/getAll.ts");
+      route("/api/globalConfig/get", "api/globalConfig/get.ts");
+      route("/api/globalConfig/upsert", "api/globalConfig/upsert.ts");
+    });
+  },
 };

@@ -5,7 +5,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
+import globalStyles from './global.style.css';
+export const links = () => [{ rel: 'stylesheet', href: globalStyles }];
 
 export default function App() {
   return (

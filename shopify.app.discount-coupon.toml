@@ -2,7 +2,7 @@
 
 name = "Discount Coupon"
 client_id = "430caf72a8563b14feacbc61e0742aab"
-application_url = "https://fully-bandwidth-saddam-oldest.trycloudflare.com"
+application_url = "https://response-arm-type-zus.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_price_rules,write_price_rules"
 
 [auth]
 redirect_urls = [
-  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/auth/callback",
-  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/auth/shopify/callback",
-  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/api/auth/callback",
-  "https://fully-bandwidth-saddam-oldest.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://response-arm-type-zus.trycloudflare.com/auth/callback",
+  "https://response-arm-type-zus.trycloudflare.com/auth/shopify/callback",
+  "https://response-arm-type-zus.trycloudflare.com/api/auth/callback",
+  "https://response-arm-type-zus.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

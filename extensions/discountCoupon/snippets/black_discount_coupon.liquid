@@ -69,7 +69,7 @@
     <div class='contain'>
       <span class='code'>{{ discountCouponCode }}</span>
       <button class='apply btn' onclick='handleClickApply({{ discountCouponCode | json }})'>APPLY</button>
-      <button class='applied btn none'>APPLIED</button>
+      <button class='applied btn none'onclick='handleClickApply({{ discountCouponCode | json }})'>APPLIED</button>
     </div>
   </div>
 </div>

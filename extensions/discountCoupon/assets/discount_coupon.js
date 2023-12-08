@@ -1,4 +1,12 @@
+// const { default: axios } = require("axios");
+
 function handleClickApply(discountCouponCode) {
+  console.log('axios handleClickApply');
+
+  axios.get(
+    `https://speeds-breeds-gate-evans.trycloudflare.com/api/globalConfig/get?shop=${location.hostname}`
+  );
+
   // change style
   const applyBtn = document.querySelector('.apply.btn');
   const appliedBtn = document.querySelector('.applied.btn');
