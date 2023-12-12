@@ -19,6 +19,10 @@ import type {
   TUpsertDiscountCodeParams,
   TUpsertDiscountCodeRes,
 } from '~/api/discountCode/upsert';
+import { RiComputerLine } from 'react-icons/ri';
+import { ImMobile } from 'react-icons/im';
+import BagsIcon from '~/components/BagsIcon';
+import Classic from '~/components/PreviewTemplate/Classic';
 
 const LeftItemContain = (props: TDivProps) => {
   return (
@@ -46,7 +50,7 @@ const ColorSetting = ({
   );
 };
 
-type TColorType =
+export type TColorType =
   | 'textColor'
   | 'btnBgColor'
   | 'btnTextColor'
@@ -56,6 +60,7 @@ type TColorType =
 export default function Setting({
   templateList,
   id,
+  code,
   shop,
   globalConfigList,
   discountCodeList,
@@ -65,6 +70,7 @@ export default function Setting({
 }: {
   templateList: ITemplate[];
   id?: string | null;
+  code?: string | null;
   shop?: string | null;
   globalConfigList: IGlobalConfig[];
   discountCodeList: IDiscountCode[];
@@ -83,6 +89,7 @@ export default function Setting({
     defaultTemplate
   );
   const isGlobal = useMemo(() => id === 'global', [id]);
+  const [previewDevice, setPreviewDevice] = useState<'mobile' | 'pc'>('mobile');
 
   const [colorConfig, setColorConfig] =
     useState<Partial<Record<TColorType, string | null | undefined>>>();
@@ -428,9 +435,129 @@ export default function Setting({
       </div>
       {/* 父容器最小宽度640px, 左侧设置栏宽度：180px， gap：8px, 16px: 父容器padding */}
       <div
-        className="min-w-[calc(640px-180px-8px-16px)] bg-white"
+        className="min-w-[calc(640px-180px-8px-16px)] bg-gray-100 rounded-lg p-2"
         style={{ flex: 2 }}
-      ></div>
+      >
+        <div className="flex justify-end px-2 pt-2 border-solid border-transparent border-b-slate-300">
+          <div className="flex items-center text-[26px] gap-4 mb-[-2px]">
+            <div
+              className={classNames({
+                'cursor-pointer text-[23px] pb-2 border-solid border-transparent':
+                  true,
+                '!border-[#1890ff]': previewDevice === 'mobile',
+              })}
+              style={{ borderWidth: 0, borderBottomWidth: '2px' }}
+              onClick={() => {
+                setPreviewDevice('mobile');
+              }}
+            >
+              <ImMobile />
+            </div>
+            <div
+              className={classNames({
+                'cursor-pointer pb-2 border-solid border-transparent': true,
+                '!border-[#1890ff]': previewDevice === 'pc',
+              })}
+              style={{ borderWidth: 0, borderBottomWidth: '2px' }}
+              onClick={() => {
+                setPreviewDevice('pc');
+              }}
+            >
+              <RiComputerLine />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center p-4">
+          {previewDevice === 'mobile' && (
+            <div className="rounded-lg bg-white w-[360px]">
+              <div className="rounded-lg overflow-hidden">
+                <div className="p-4 bg-white flex justify-between items-center">
+                  <div className="bg-slate-200 rounded w-12 h-6"></div>
+                  <div className="flex gap-2">
+                    <div className="bg-slate-200 rounded-full w-6 h-6"></div>
+                    <div className="bg-slate-200 rounded-full w-6 h-6"></div>
+                    <div className="bg-slate-200 rounded-full w-6 h-6"></div>
+                  </div>
+                </div>
+                <div className="bg-slate-200 flex items-center justify-center">
+                  <BagsIcon />
+                </div>
+                <div className="bg-white p-4">
+                  <div className="bg-slate-200 rounded h-8 w-36 mb-4" />
+                  <div className="bg-slate-200 rounded h-4 w-full mb-4" />
+                  <div className="text-slate-200 text-[26px] mb-4">$$$$</div>
+                  <div className="mb-4">
+                    <Classic
+                      btnBgColor={colorConfig?.btnBgColor || undefined}
+                      btnTextColor={colorConfig?.btnTextColor || undefined}
+                      codeBgColor={colorConfig?.codeBgColor || undefined}
+                      codeColor={colorConfig?.codeColor || undefined}
+                      textColor={colorConfig?.textColor || undefined}
+                      code={code || undefined}
+                      leftText={leftText || undefined}
+                      previewDevice={previewDevice}
+                    />
+                  </div>
+                  <div className="text-[18px] text-slate-400 flex gap-4 mb-4">
+                    <div className="rounded px-4 py-2 bg-slate-200">XS</div>
+                    <div className="rounded px-4 py-2 bg-slate-200">M</div>
+                    <div className="rounded px-4 py-2 bg-slate-200">XL</div>
+                  </div>
+                  <div className="bg-slate-200 text-[18px] text-slate-400 rounded text-center py-4">
+                    ADD TO CART
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {previewDevice === 'pc' && (
+            <div className="rounded-lg bg-white w-full">
+              <div className="rounded-lg overflow-hidden">
+                <div className="p-2 bg-slate-200 flex">
+                  <div className="flex gap-2">
+                    <div className="bg-slate-300 rounded-full w-3 h-3"></div>
+                    <div className="bg-slate-300 rounded-full w-3 h-3"></div>
+                    <div className="bg-slate-300 rounded-full w-3 h-3"></div>
+                  </div>
+                </div>
+                <div className="bg-white flex justify-center py-16">
+                  <div className="bg-slate-200 flex items-center justify-center w-[200px] h-fit">
+                    <BagsIcon />
+                  </div>
+                  <div className="bg-white px-6">
+                    <div className="bg-slate-200 rounded h-8 w-36 mb-4" />
+                    <div className="bg-slate-200 rounded h-4 w-full mb-4" />
+                    <div className="text-slate-200 text-[26px] mb-4 font-bold">
+                      $$$$
+                    </div>
+                    <div className="mb-4">
+                      <Classic
+                        btnBgColor={colorConfig?.btnBgColor || undefined}
+                        btnTextColor={colorConfig?.btnTextColor || undefined}
+                        codeBgColor={colorConfig?.codeBgColor || undefined}
+                        codeColor={colorConfig?.codeColor || undefined}
+                        textColor={colorConfig?.textColor || undefined}
+                        code={code || undefined}
+                        leftText={leftText || undefined}
+                        previewDevice={previewDevice}
+                      />
+                    </div>
+                    <div className="text-[18px] text-slate-400 flex gap-4 mb-4">
+                      <div className="rounded px-4 py-2 bg-slate-200">XS</div>
+                      <div className="rounded px-4 py-2 bg-slate-200">M</div>
+                      <div className="rounded px-4 py-2 bg-slate-200">XL</div>
+                    </div>
+                    <div className="bg-slate-200 text-[18px] text-slate-400 rounded text-center py-4">
+                      ADD TO CART
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

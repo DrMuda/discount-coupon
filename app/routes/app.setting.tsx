@@ -18,6 +18,9 @@ import type {
 } from '~/api/discountCode/get';
 import { IoArrowBackSharp } from 'react-icons/io5';
 import { Button } from '@shopify/polaris';
+import { links as ClassicLinks } from '~/components/PreviewTemplate/Classic';
+
+export const links = () => [...ClassicLinks()];
 
 interface ILoaderData {
   shop?: string | null;
@@ -176,6 +179,7 @@ export default function SettingPage() {
       </div>
       <Setting
         id={id}
+        code={code}
         shop={shop}
         templateList={templateList}
         discountCodeList={discountCodeList || []}

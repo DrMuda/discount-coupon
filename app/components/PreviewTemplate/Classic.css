@@ -1,0 +1,186 @@
+.classic svg {
+  color: black;
+  fill: black;
+}
+.classic * {
+  box-sizing: border-box;
+}
+.classic {
+  min-height: 80px;
+  border: 3px solid black;
+  width: 100%;
+  max-width: 438px;
+  position: relative;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: white;
+}
+.classic .none {
+  display: none !important;
+}
+.classic .big-corner {
+  position: absolute;
+  background-color: white;
+}
+.classic .big-corner.lt {
+  left: -3px;
+  top: -3px;
+}
+.classic .big-corner.rt {
+  right: -3px;
+  top: -3px;
+  transform: rotate(90deg);
+}
+.classic .big-corner.lb {
+  left: -3px;
+  bottom: -3px;
+  transform: rotate(270deg);
+}
+.classic .big-corner.rb {
+  right: -3px;
+  bottom: -3px;
+  transform: rotate(180deg);
+}
+
+.classic .border {
+  position: absolute;
+  top: -4px;
+  /* base.css 会覆盖 宽高 */
+  height: 178px !important;
+  width: 6px !important;
+}
+.classic .border.left {
+  left: -3px;
+}
+.classic .border.right {
+  right: -3px;
+  transform: rotate(180deg);
+}
+
+.classic .left-content,
+.classic .right-content {
+  position: absolute;
+  height: 100%;
+  align-items: center;
+  font-family: 'Noto Serif';
+  top: 0;
+}
+.classic .left-content.height-content {
+  position: relative;
+  opacity: 0;
+}
+.classic .left-content .contain,
+.classic .right-content .contain {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.classic .left-content {
+  width: calc(100% - 120px);
+}
+.classic .right-content {
+  width: 120px;
+  right: 0;
+}
+
+.classic .left-content .contain {
+  padding: 0 10px 0 20px;
+  font-weight: 600;
+}
+.classic .left-content .contain .code {
+  font-weight: 400;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.classic .right-content .contain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.classic .right-content .contain .code {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.classic .right-content .btn {
+  padding: 6px;
+  border: 1px solid black;
+  min-width: 80px;
+  text-align: center;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.classic .right-content .apply {
+  background-color: black;
+  color: white;
+}
+.classic .right-content .applied {
+  background-color: white;
+  color: black;
+}
+
+.classic .divider {
+  position: absolute;
+  top: 0;
+  /* 右边区域宽度 */
+  right: 120px;
+  width: 1;
+  height: 100%;
+  border-left: 1px dashed black;
+  overflow: visible;
+}
+
+.classic .small-corner {
+  position: absolute;
+}
+.classic .small-corner.lt {
+  left: -1px;
+  top: -3px;
+  transform: rotateY(180deg);
+}
+.classic .small-corner.rt {
+  right: -1px;
+  top: -3px;
+}
+.classic .small-corner.lb {
+  left: -1px;
+  bottom: -3px;
+  transform: rotate(180deg);
+}
+.classic .small-corner.rb {
+  right: -1px;
+  bottom: -3px;
+  transform: rotateX(180deg);
+}
+
+/* @media screen and (min-width: 750px) { */
+.classic.pc .left-content .msg {
+  font-size: 20px;
+  line-height: 22px;
+}
+.classic.pc .left-content .code {
+  display: none;
+}
+/* } */
+/* @media screen and (max-width: 750px) {  */
+.classic.mobile .left-content .contain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.classic.mobile .left-content .msg {
+  font-size: 16px;
+  line-height: 22px;
+}
+.classic.mobile .right-content .code {
+  display: none;
+}
+/* } */
