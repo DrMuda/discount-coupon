@@ -18,12 +18,18 @@ import { authenticate } from '~/shopify.server';
 import { type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData, useNavigate } from '@remix-run/react';
 import type { PriceRule } from 'node_modules/@shopify/shopify-api/rest/admin/2023-10/price_rule';
-import { type IResult, getEffectStatus, isNil, mapToOptions } from '~/utils';
+import {
+  type IResult,
+  getEffectStatus,
+  isNil,
+  mapToOptions,
+  defaultCatch,
+} from '~/utils';
 import dayjs, { type Dayjs } from 'dayjs';
 import { CancelMinor, TickMinor } from '@shopify/polaris-icons';
-import emotionStyled from '@emotion/styled';
 import SortModal from '~/components/SortModal';
-import axios from 'axios';
+import api from '~/utils/request';
+import type { IDiscountCode } from '~/api/discountCode/get';
 
 enum EYesNo {
   Yes = 'yes',
@@ -63,27 +69,34 @@ const effectBadgeToneMap: Record<EEffectStatus, BadgeProps['tone']> = {
   [EEffectStatus.Arranged]: 'attention',
   [EEffectStatus.Expired]: undefined,
 };
-export type TDiscountCode = PriceRule & {
-  code?: string;
-  useInProductDetail?: boolean;
-  useInCart?: boolean;
-  useGlobalConfig?: boolean;
-};
 interface ISearchValue {
   type?: EDiscountType;
   isGlobal?: EYesNo;
   codeOrName?: string;
 }
 
-// 去除表格选择框。 IndexTable 设置 selectable:false 会导致表格行无法点击
-const TableContain = emotionStyled.div(() => ({
-  tr: {
-    'td:first-of-type': { display: 'none' },
-    'th:first-of-type': { display: 'none' },
-  },
-}));
-
-export async function loader({ request }: LoaderFunctionArgs) {
+export type ITableRowData = Pick<
+  PriceRule,
+  | 'starts_at'
+  | 'ends_at'
+  | 'id'
+  | 'title'
+  | 'target_type'
+  | 'allocation_method'
+  | 'value_type'
+> & {
+  code?: string;
+  useInProductDetail?: boolean;
+  useInCart?: boolean;
+  productDetailUseGlobalConfig?: boolean;
+};
+interface ILoaderData {
+  discountCodeList?: ITableRowData[];
+  shop?: string;
+}
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<ILoaderData> {
   const { admin, session } = await authenticate.admin(request);
   const { shop } = session;
   try {
@@ -127,7 +140,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
     const resList = await Promise.allSettled(pList);
 
-    const discountCodeList: TDiscountCode[] = [];
+    const discountCodeList: ITableRowData[] = [];
     resList.forEach((res) => {
       if (res.status === 'fulfilled') {
         const { data: dataList = [] } = res.value;
@@ -141,7 +154,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
             ...priceRule,
             code: code || undefined,
             id,
-          } as TDiscountCode);
+          } as ITableRowData);
         });
       }
       return null;
@@ -149,14 +162,14 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return { discountCodeList, shop };
   } catch (error) {
     console.error(error);
-    return [];
+    return {};
   }
 }
 
 export default function Index() {
   const { discountCodeList: shopifyDiscountCodeList, shop } =
-    useLoaderData() as { discountCodeList: TDiscountCode[]; shop: string };
-  const [discountCodeList, setDiscountCodeList] = useState<TDiscountCode[]>([]);
+    useLoaderData() as ILoaderData;
+  const [discountCodeList, setDiscountCodeList] = useState<ITableRowData[]>([]);
   const [searchValue, setSearchValue] = useState<ISearchValue>({
     codeOrName: undefined,
     type: undefined,
@@ -165,36 +178,51 @@ export default function Index() {
   const navigate = useNavigate();
   const [sortModalOpen, setSortModalOpen] = useState(false);
 
-  const getDiscountCodeList = useCallback(async () => {
-    if (shopifyDiscountCodeList.length <= 0) return [];
-    const dbDiscountCodeListRes = (await axios.get(
-      `/api/discountCode/getAll?shop=${shop}`,
-      {
-        method: 'get',
-      }
-    )) as unknown as { data: IResult<TDiscountCode[]> };
-    const dbDiscountCodeList = dbDiscountCodeListRes.data.data;
+  const getDiscountCodeList = useCallback(async (): Promise<
+    ITableRowData[]
+  > => {
+    if (!shopifyDiscountCodeList || shopifyDiscountCodeList.length <= 0)
+      return [];
+    const dbDiscountCodeListRes = (await api
+      .get(`/api/discountCode/get`, { params: { shop } })
+      .catch(defaultCatch)) as IResult<IDiscountCode[]> | null;
+    const dbDiscountCodeList = dbDiscountCodeListRes?.data || [];
+
     return shopifyDiscountCodeList.map((shopifyDiscountCode) => {
-      const dbDiscountCode = dbDiscountCodeList.find(
-        ({ id }) => id === shopifyDiscountCode.id
-      );
-      if (dbDiscountCode) {
-        return { ...shopifyDiscountCode, ...dbDiscountCode };
-      }
-      return { ...shopifyDiscountCode, useGlobalConfig: true };
+      const useInProductDetail =
+        dbDiscountCodeList.findIndex(
+          ({ whichPage, show, shopifyDiscountCodeId }) =>
+            shopifyDiscountCodeId === shopifyDiscountCode.id?.toString() &&
+            whichPage === 1 &&
+            show
+        ) > -1;
+      const useInCart =
+        dbDiscountCodeList.findIndex(
+          ({ whichPage, show, shopifyDiscountCodeId }) =>
+            shopifyDiscountCodeId === shopifyDiscountCode.id?.toString() &&
+            whichPage === 2 &&
+            show
+        ) > -1;
+      // 找出不跟随全局的, 找不到的都默认跟随全局
+      const productDetailNotUseGlobalConfig =
+        dbDiscountCodeList.findIndex(
+          ({ whichPage, useGlobalConfig, shopifyDiscountCodeId }) =>
+            shopifyDiscountCodeId === shopifyDiscountCode.id?.toString() &&
+            whichPage === 1 &&
+            useGlobalConfig === false
+        ) > -1;
+
+      return {
+        ...shopifyDiscountCode,
+        useInCart,
+        useInProductDetail,
+        productDetailUseGlobalConfig: !productDetailNotUseGlobalConfig,
+      } as ITableRowData;
     });
   }, [shopifyDiscountCodeList, shop]);
 
   useEffect(() => {
-    getDiscountCodeList().then(
-      (value) => {
-        console.log({ discountCodeList: value });
-        setDiscountCodeList(value as TDiscountCode[]);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    getDiscountCodeList().then(setDiscountCodeList);
   }, [getDiscountCodeList]);
 
   const tableRows = useMemo(() => {
@@ -242,13 +270,13 @@ export default function Index() {
       if (
         isGlobal &&
         isGlobal === EYesNo.Yes &&
-        discountCode.useGlobalConfig !== true
+        discountCode.productDetailUseGlobalConfig !== true
       )
         return;
       if (
         isGlobal &&
         isGlobal === EYesNo.No &&
-        discountCode.useGlobalConfig !== false
+        discountCode.productDetailUseGlobalConfig !== false
       )
         return;
 
@@ -265,7 +293,11 @@ export default function Index() {
           id={discountCode.id.toString()}
           position={index}
           onClick={() => {
-            navigate(`/app/${discountCode.id}/setting`);
+            navigate(
+              `setting?id=${discountCode.id}&code=${encodeURIComponent(
+                discountCode.code || ''
+              )}&title=${encodeURIComponent(discountCode.title || '')}`
+            );
           }}
         >
           <IndexTable.Cell>
@@ -301,6 +333,13 @@ export default function Index() {
               <Icon source={CancelMinor} />
             )}
           </IndexTable.Cell>
+          <IndexTable.Cell>
+            {discountCode.productDetailUseGlobalConfig !== false ? (
+              <Icon source={TickMinor} />
+            ) : (
+              <Icon source={CancelMinor} />
+            )}
+          </IndexTable.Cell>
         </IndexTable.Row>
       );
     });
@@ -319,7 +358,7 @@ export default function Index() {
             variant="primary"
             size="large"
             onClick={() => {
-              navigate('/app/global/setting');
+              navigate(`setting?id=global`);
             }}
           >
             样式设置
@@ -383,8 +422,7 @@ export default function Index() {
             />
           </div>
         </div>
-
-        <TableContain>
+        <div className="no-select-table-contain">
           <IndexTable
             headings={[
               { title: '折扣码' },
@@ -393,16 +431,17 @@ export default function Index() {
               { title: '生效时间' },
               { title: '商品详情页', alignment: 'center' },
               { title: '购物车页', alignment: 'center' },
+              { title: '商详页跟随全局', alignment: 'center' },
             ]}
             itemCount={tableRows.length}
             // selectable={false}
           >
             {tableRows}
           </IndexTable>
-        </TableContain>
+        </div>
       </div>
       <SortModal
-        shop={shop}
+        shop={shop || ''}
         open={sortModalOpen}
         setOpen={setSortModalOpen}
         discountCodeList={discountCodeList}

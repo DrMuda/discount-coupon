@@ -1,24 +1,31 @@
 import { type LoaderFunctionArgs } from '@remix-run/node';
-import { getUrlParams, publicLoader } from '~/utils';
+import { type IResult, getUrlParams, publicLoader } from '~/utils';
 
 export interface IGlobalConfig {
   id: number;
   shop: string;
-  styleId: number;
+  templateId: number | null;
   codeBgColor: string | null;
   codeColor: string | null;
   textColor: string | null;
-  btnBgColot: string | null;
+  btnBgColor: string | null;
   btnTextColor: string | null;
   sort: string | null;
+  /** 作用于哪个页面 1. 商品详情页, 2. 购物车页面 */
+  whichPage: number;
 }
+export type TGetGlobalConfigRes = IResult<IGlobalConfig[] | null>;
 export async function loader(loaderFunctionArgs: LoaderFunctionArgs) {
-  return publicLoader(loaderFunctionArgs, async ({ request }) => {
-    const shop = getUrlParams(request.url, 'shop');
-    if (typeof shop !== 'string')
-      return { data: null, msg: 'require parameters shop(string)', code: 1 };
-    console.log({ shop });
-    const configList = await prisma.globalConfig.findFirst({ where: { shop } });
-    return { data: configList, msg: 'ok', code: 0 };
-  });
+  return publicLoader(
+    loaderFunctionArgs,
+    async ({ request }): Promise<TGetGlobalConfigRes> => {
+      const { shop } = getUrlParams(request.url) as { shop: string };
+      if (typeof shop !== 'string')
+        return { data: null, msg: 'require parameters shop(string)', code: 1 };
+      const configList = await prisma.globalConfig.findMany({
+        where: { shop },
+      });
+      return { data: configList, msg: 'ok', code: 0 };
+    }
+  );
 }

@@ -3,23 +3,23 @@ import { type IGlobalConfig } from '~/api/globalConfig/get';
 import { type IResult } from '~/utils';
 import { prisma } from '../../db.server';
 
-export type TUpsertParams = Required<IGlobalConfig> & { shop: string };
+export type TUpsertGlobalConfigParams = Required<IGlobalConfig> & {
+  shop: string;
+};
+export type TUpsertGlobalConfigRes = IResult<IGlobalConfig | null | unknown>;
 export async function action({
   request,
-}: ActionFunctionArgs): Promise<IResult<IGlobalConfig | null | unknown>> {
-  const data = (await request.json()) as TUpsertParams;
+}: ActionFunctionArgs): Promise<TUpsertGlobalConfigRes> {
+  const data = (await request.json()) as TUpsertGlobalConfigParams;
   const { shop } = data;
   if (!shop)
     return { code: 1, data: null, msg: 'require parameters shop(string)' };
   try {
     let config: unknown | null = null;
-    const existsConfig = await prisma.globalConfig.findFirst({
-      where: { shop },
-    });
-    if (existsConfig) {
+    if (data.id) {
       config = await prisma.globalConfig.update({
         data,
-        where: { id: existsConfig.id },
+        where: { id: data.id },
       });
     } else {
       config = await prisma.globalConfig.create({

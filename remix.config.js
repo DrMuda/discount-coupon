@@ -12,16 +12,18 @@ if (
 
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
-  ignoredRouteFiles: ["**/.*"],
-  appDirectory: "app",
-  serverModuleFormat: "cjs",
+  ignoredRouteFiles: ['**/.*'],
+  appDirectory: 'app',
+  serverModuleFormat: 'cjs',
   dev: { port: process.env.HMR_SERVER_PORT || 8002 },
   future: {},
   routes(defineRoutes) {
     return defineRoutes((route) => {
-      route("/api/discountCode/getAll", "api/discountCode/getAll.ts");
-      route("/api/globalConfig/get", "api/globalConfig/get.ts");
-      route("/api/globalConfig/upsert", "api/globalConfig/upsert.ts");
+      route('/api/discountCode/get', 'api/discountCode/get.ts');
+      route('/api/discountCode/upsert', 'api/discountCode/upsert.ts');
+      route('/api/globalConfig/get', 'api/globalConfig/get.ts');
+      route('/api/globalConfig/upsert', 'api/globalConfig/upsert.ts');
+      route('/api/template/getAll', 'api/template/getAll.ts');
     });
   },
 };

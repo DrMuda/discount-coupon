@@ -21,49 +21,53 @@ model Session {
   userId      BigInt?
 }
 
-model Style {
+model Template {
   id           Int     @id @default(autoincrement())
   name         String
   codeBgColor  String?
   codeColor    String?
   textColor    String?
-  btnBgColot   String?
+  btnBgColor   String?
   btnTextColor String?
 }
 
 model GlobalConfig {
   id           Int     @id @default(0)
   shop         String
-  styleId      Int?
+  templateId   Int?
   codeBgColor  String?
   codeColor    String?
   textColor    String?
-  btnBgColot   String?
+  btnBgColor   String?
   btnTextColor String?
 
   // 排序， 以逗号分隔折扣码id, 以不同方式排序时， 直接计算出准确的排序结果
   sort String?
+
+  // 作用于哪个页面 1. 商品详情页, 2. 购物车页面
+  whichPage Int @default(1)
 }
 
 model DiscountCode {
-  id   Int    @id @default(autoincrement())
-  shop String
+  id Int @id @default(autoincrement())
 
-  useGlobalConfig    Boolean @default(true)
-  useInProductDetail Boolean @default(false)
-  useInCart          Boolean @default(false)
+  shopifyDiscountCodeId String
+  shop                  String
 
-  styleId      Int
+  useGlobalConfig Boolean @default(true)
+  show            Boolean @default(false)
+
+  templateId   Int
   codeBgColor  String?
   codeColor    String?
   textColor    String?
-  btnBgColot   String?
+  btnBgColor   String?
   btnTextColor String?
 
-  bannerBgColor      String?
-  bannerTextColot    String?
-  bannerBtnBgColor   String?
-  bannerBtnTextColor String?
+  leftText String?
+
+  // 作用于哪个页面 1. 商品详情页, 2. 购物车页面
+  whichPage Int @default(1)
 
   createdAt DateTime @default(now())
 }

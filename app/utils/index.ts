@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, json } from '@remix-run/node';
 import dayjs from 'dayjs';
-import { EEffectStatus, type TDiscountCode } from '~/routes/app._index';
+import { EEffectStatus, type ITableRowData } from '~/routes/app._index';
 
 export interface IResult<Data = any> {
   data: Data;
@@ -48,7 +48,7 @@ export const mapToOptions = (map: Record<string, any>): TOption[] => {
 };
 
 // 算出生效状态
-export const getEffectStatus = (discountCode: TDiscountCode) => {
+export const getEffectStatus = (discountCode: ITableRowData) => {
   let effectStatus: EEffectStatus | null = null;
   const startTime = discountCode.starts_at
     ? dayjs(discountCode.starts_at)
@@ -70,12 +70,15 @@ export const getEffectStatus = (discountCode: TDiscountCode) => {
 };
 
 // 获取url参数
-export const getUrlParams = (url: string, key: string) => {
-  if (typeof url !== 'string') return null;
-  const reg = new RegExp(`${key}=[^&]*(&)?`);
-  const [res] = url.match(reg) || [];
-  if (!res) return null;
-  return res.replace('&', '').replace(`${key}=`, '');
+export const getUrlParams = (urlStr: string) => {
+  if (typeof urlStr !== 'string') return {};
+  const parmas: Record<string, string> = {};
+  const url = new URL(urlStr);
+  const searchParams = url.searchParams;
+  Array.from(searchParams.entries()).forEach(([key, value]) => {
+    parmas[key] = value;
+  });
+  return parmas;
 };
 
 export const showToast = ({
@@ -99,4 +102,9 @@ export const showToast = ({
   setTimeout(() => {
     toast.remove();
   }, duration + 1000);
+};
+
+export const defaultCatch = (error: any) => {
+  console.error(error);
+  return null;
 };

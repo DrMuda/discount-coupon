@@ -2,7 +2,7 @@
 
 name = "Discount Coupon"
 client_id = "430caf72a8563b14feacbc61e0742aab"
-application_url = "https://response-arm-type-zus.trycloudflare.com"
+application_url = "https://sunny-planner-inventory-dpi.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_price_rules,write_price_rules"
 
 [auth]
 redirect_urls = [
-  "https://response-arm-type-zus.trycloudflare.com/auth/callback",
-  "https://response-arm-type-zus.trycloudflare.com/auth/shopify/callback",
-  "https://response-arm-type-zus.trycloudflare.com/api/auth/callback",
-  "https://response-arm-type-zus.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://sunny-planner-inventory-dpi.trycloudflare.com/auth/callback",
+  "https://sunny-planner-inventory-dpi.trycloudflare.com/auth/shopify/callback",
+  "https://sunny-planner-inventory-dpi.trycloudflare.com/api/auth/callback",
+  "https://sunny-planner-inventory-dpi.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
