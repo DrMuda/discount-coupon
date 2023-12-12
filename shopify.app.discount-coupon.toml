@@ -2,7 +2,7 @@
 
 name = "Discount Coupon"
 client_id = "430caf72a8563b14feacbc61e0742aab"
-application_url = "https://cooler-simulation-painted-dm.trycloudflare.com"
+application_url = "https://lt-beginning-movement-regular.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_price_rules,write_price_rules"
 
 [auth]
 redirect_urls = [
-  "https://cooler-simulation-painted-dm.trycloudflare.com/auth/callback",
-  "https://cooler-simulation-painted-dm.trycloudflare.com/auth/shopify/callback",
-  "https://cooler-simulation-painted-dm.trycloudflare.com/api/auth/callback",
-  "https://cooler-simulation-painted-dm.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://lt-beginning-movement-regular.trycloudflare.com/auth/callback",
+  "https://lt-beginning-movement-regular.trycloudflare.com/auth/shopify/callback",
+  "https://lt-beginning-movement-regular.trycloudflare.com/api/auth/callback",
+  "https://lt-beginning-movement-regular.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

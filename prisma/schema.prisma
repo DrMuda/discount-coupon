@@ -32,7 +32,7 @@ model Template {
 }
 
 model GlobalConfig {
-  id           Int     @id @default(0)
+  id           Int     @id @default(autoincrement())
   shop         String
   templateId   Int?
   codeBgColor  String?

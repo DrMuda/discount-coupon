@@ -90,7 +90,7 @@ export default function SettingPage() {
 
   const getGlobalConfig = async () => {
     const res = (await api
-      .get('/api/globalConfig/get', { params: shop })
+      .get('/api/globalConfig/get', { params: { shop } })
       .catch(defaultCatch)) as TGetGlobalConfigRes | null;
     if (res?.code === 0) {
       return res.data || [];
@@ -111,8 +111,8 @@ export default function SettingPage() {
   };
 
   useEffect(() => {
-    getGlobalConfig().then(setGlobalConfigList);
-    getDiscountCode().then(setDiscountCodeList);
+    isGlobal && getGlobalConfig().then(setGlobalConfigList);
+    !isGlobal && getDiscountCode().then(setDiscountCodeList);
     getTemplateList().then(setTemplateList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
