@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, json } from '@remix-run/node';
+import { type LoaderFunctionArgs, json, ActionFunctionArgs } from '@remix-run/node';
 import dayjs from 'dayjs';
 import { EEffectStatus, type ITableRowData } from '~/routes/app._index';
 
@@ -16,6 +16,18 @@ export const publicLoader = async (
   const publicHeaders = origin && getPublicHeaders(origin);
 
   const data = await callback(loaderFunctionArgs);
+
+  return json(data, { headers: publicHeaders || undefined });
+};
+export const publicAction = async (
+  actionFunctionArgs: ActionFunctionArgs,
+  callback: (actionFunctionArgs: ActionFunctionArgs) => Promise<IResult>
+) => {
+  const { request } = actionFunctionArgs;
+  const origin = request.headers.get('Origin') || request.headers.get('origin');
+  const publicHeaders = origin && getPublicHeaders(origin);
+
+  const data = await callback(actionFunctionArgs);
 
   return json(data, { headers: publicHeaders || undefined });
 };

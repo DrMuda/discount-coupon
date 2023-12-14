@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Discount Coupon Dev"
+client_id = "bd5542982f50074b1c0483c0012ea633"
+application_url = "https://wanting-dominant-appliances-honolulu.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_price_rules,write_price_rules"
+
+[auth]
+redirect_urls = [
+  "https://wanting-dominant-appliances-honolulu.trycloudflare.com/auth/callback",
+  "https://wanting-dominant-appliances-honolulu.trycloudflare.com/auth/shopify/callback",
+  "https://wanting-dominant-appliances-honolulu.trycloudflare.com/api/auth/callback",
+  "https://wanting-dominant-appliances-honolulu.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "revashopdev.myshopify.com"

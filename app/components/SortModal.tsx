@@ -1,5 +1,5 @@
 import { Modal, Select } from '@shopify/polaris';
-import { EEffectStatus, type TDiscountCode } from '~/routes/app._index';
+import { EEffectStatus, type ITableRowData } from '~/routes/app._index';
 import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -10,11 +10,19 @@ import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { CSS } from '@dnd-kit/utilities';
 import { RiDragMove2Fill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
-import { type IResult, getEffectStatus, showToast } from '~/utils';
+import {
+  type IResult,
+  getEffectStatus,
+  showToast,
+  defaultCatch,
+} from '~/utils';
 import dayjs, { type Dayjs } from 'dayjs';
-import axios from 'axios';
 import type { IGlobalConfig } from '~/api/globalConfig/get';
-import type { TUpsertParams } from '~/api/globalConfig/upsert';
+import type {
+  TUpsertGlobalConfigParams,
+  TUpsertGlobalConfigRes,
+} from '~/api/globalConfig/upsert';
+import api from '~/utils/request';
 
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
@@ -23,7 +31,7 @@ const Row = ({
   children,
   discountCode,
   ...props
-}: RowProps & { discountCode: TDiscountCode }) => {
+}: RowProps & { discountCode: ITableRowData }) => {
   const {
     attributes,
     listeners,
@@ -96,31 +104,36 @@ export default function SortModal({
   shop: string;
   open: boolean;
   setOpen: (open: boolean) => void;
-  discountCodeList: TDiscountCode[];
+  discountCodeList: ITableRowData[];
 }) {
-  const [globalConfig, setGlobalConfig] = useState<IGlobalConfig>();
-  const [discountCodeList, setDiscountCodeList] = useState<TDiscountCode[]>([]);
+  const [globalConfigSort, setGlobalConfigSort] = useState<{
+    sort?: string;
+    id?: number;
+  }>();
+  const [discountCodeList, setDiscountCodeList] = useState<ITableRowData[]>([]);
   const handleOK = async () => {
-    const res: { data: IResult } = await axios.post(
-      '/api/globalConfig/upsert',
-      {
+    const res = (await api
+      .post('/api/globalConfig/upsert', {
         shop,
+        id: globalConfigSort?.id,
         sort: discountCodeList.map(({ id }) => id).join(','),
-      } as TUpsertParams
-    );
-    if (res.data.code === 0) {
+      } as TUpsertGlobalConfigParams)
+      .catch(defaultCatch)) as TUpsertGlobalConfigRes | null;
+    if (res?.code === 0) {
       showToast({ content: '保存成功' });
       setOpen(false);
       return;
     }
-    showToast({ content: `保存失败${res.data.msg}` });
+    showToast({ content: `保存失败${res?.msg}` });
   };
   const getGlobalConfig = async () => {
-    const globalConfigRes = (await axios('/api/globalConfig/get', {
-      params: { shop },
-    })) as { data: IResult<IGlobalConfig> };
-    if (globalConfigRes.data.code === 0) {
-      return globalConfigRes.data.data;
+    const globalConfigRes = (await api
+      .get('/api/globalConfig/get', {
+        params: { shop },
+      })
+      .catch(defaultCatch)) as IResult<IGlobalConfig[]> | null;
+    if (globalConfigRes?.code === 0) {
+      return globalConfigRes.data;
     }
     return undefined;
   };
@@ -136,15 +149,15 @@ export default function SortModal({
   useEffect(() => {
     let discountCodeList = JSON.parse(
       JSON.stringify(originDiscountCodeList)
-    ) as TDiscountCode[];
+    ) as ITableRowData[];
     // 过滤无效折扣码
     discountCodeList = discountCodeList.filter((discountCode) => {
       const effectStatus = getEffectStatus(discountCode);
       return effectStatus !== EEffectStatus.Expired;
     });
     // 根据保存的全局配置排序
-    if (globalConfig) {
-      const { sort } = globalConfig;
+    if (globalConfigSort) {
+      const { sort } = globalConfigSort;
       const sortList = sort?.split(',');
       discountCodeList = discountCodeList.sort((a, b) => {
         let aIdIndex = -1;
@@ -157,12 +170,16 @@ export default function SortModal({
       });
     }
     setDiscountCodeList(discountCodeList);
-  }, [originDiscountCodeList, globalConfig]);
+  }, [originDiscountCodeList, globalConfigSort]);
 
   useEffect(() => {
     open &&
-      getGlobalConfig().then((value) => {
-        setGlobalConfig(value);
+      getGlobalConfig().then((values = []) => {
+        const value = values.find(({ sort }) => !!sort);
+        setGlobalConfigSort({
+          sort: value?.sort || undefined,
+          id: values[0]?.id,
+        });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);

@@ -84,6 +84,7 @@ export type ITableRowData = Pick<
   | 'target_type'
   | 'allocation_method'
   | 'value_type'
+  | 'created_at'
 > & {
   code?: string;
   useInProductDetail?: boolean;
@@ -99,6 +100,7 @@ export async function loader({
 }: LoaderFunctionArgs): Promise<ILoaderData> {
   const { admin, session } = await authenticate.admin(request);
   const { shop } = session;
+
   try {
     // 获取价格规则总数
     const page = 1;

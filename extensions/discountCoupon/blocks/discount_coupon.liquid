@@ -1,32 +1,37 @@
+{% capture classicJs %}
+  {{ 'classic.js' | asset_url }}
+{% endcapture %}
+{% capture classicCss %}
+  {{ 'classic.css' | asset_url }}
+{% endcapture %}
+{% capture classicHtml %}
+  {{ 'classic.html' | asset_url }}
+{% endcapture %}
+{% capture multipleDiscountContain %}
+  {{ 'multipleDiscountContain.html'| asset_url }}
+{% endcapture %}
+
 <head>
-  <script src='{{ 'discount_coupon.js' | asset_url }}' defer></script>
-  <script src='https://unpkg.com/axios/dist/axios.min.js' defer></script>
-  {{ 'discount_coupon.css' | asset_url | stylesheet_tag }}
+  <script src='{{ 'index.js' | asset_url }}' defer></script>
+  <script src='{{ 'axios.js' | asset_url }}' defer></script>
+  <script src='{{ 'classic.js' | asset_url }}' defer></script>
+  {{ 'classic.css' | asset_url | stylesheet_tag }}
+  {{ 'global.css' | asset_url | stylesheet_tag }}
 </head>
 
-{% assign discountCouponCode = block.settings.discountCouponCode | strip %}
-{% assign leftText = block.settings.leftText | strip %}
-<span>
-  {% render 'black_discount_coupon', discountCouponCode: discountCouponCode, leftText: leftText %}
-</span>
+<div id='discount-coupon-container'>
+  <div class='variable'>
+    <div id='classicJs'>{{ classicJs }}</div>
+    <div id='classicCss'>{{ classicCss }}</div>
+    <div id='classicHtml'>{{ classicHtml }}</div>
+    <div id='multipleDiscountContain'>{{ multipleDiscountContain }}</div>
+  </div>
+</div>
 
 {% schema %}
 {
   "name": "Discount Coupon",
   "target": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "discountCouponCode",
-      "label": "折扣券码(Discount coupon code)",
-      "default": "请填写折扣券码"
-    },
-    {
-      "type": "text",
-      "id": "leftText",
-      "label": "左侧文本(Left content)",
-      "default": "Buy AED 150.00，AED 20.00 OFF"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}

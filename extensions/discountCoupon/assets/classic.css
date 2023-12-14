@@ -1,11 +1,11 @@
-svg{
+.classic svg{
   color: black;
   fill: black;
 }
-.black-discount-coupon * {
+.classic * {
   box-sizing: border-box;
 }
-.black-discount-coupon {
+.classic {
   min-height: 80px;
   border: 3px solid black;
   width: 100%;
@@ -16,62 +16,62 @@ svg{
   overflow: hidden;
   background-color: white;
 }
-.none {
+.classic .none {
   display: none !important;
 }
-.big-corner {
+.classic .big-corner {
   position: absolute;
   background-color: white;
 }
-.big-corner.lt {
+.classic .big-corner.lt {
   left: -3px;
   top: -3px;
 }
-.big-corner.rt {
+.classic .big-corner.rt {
   right: -3px;
   top: -3px;
   transform: rotate(90deg);
 }
-.big-corner.lb {
+.classic .big-corner.lb {
   left: -3px;
   bottom: -3px;
   transform: rotate(270deg);
 }
-.big-corner.rb {
+.classic .big-corner.rb {
   right: -3px;
   bottom: -3px;
   transform: rotate(180deg);
 }
 
-.border {
+.classic .border {
   position: absolute;
   top: -4px;
   /* base.css 会覆盖 宽高 */
   height: 178px !important;
   width: 6px !important;
 }
-.border.left {
+.classic .border.left {
   left: -3px;
 }
-.border.right {
+.classic .border.right {
   right: -3px;
   transform: rotate(180deg);
 }
 
-.left-content,
-.right-content {
+.classic .left-content,
+.classic .right-content {
   position: absolute;
   height: 100%;
   align-items: center;
   font-family: 'Noto Serif';
   top: 0;
 }
-.left-content.height-content {
+.classic .left-content.height-content {
   position: relative;
   opacity: 0;
 }
-.left-content .contain,
-.right-content .contain {
+.classic .left-content .contain,
+.classic .right-content .contain {
   position: relative;
   height: 100%;
   width: 100%;
@@ -79,35 +79,35 @@ svg{
   align-items: center;
 }
 
-.left-content {
+.classic .left-content {
   width: calc(100% - 120px);
 }
-.right-content {
+.classic .right-content {
   width: 120px;
   right: 0;
 }
 
-.left-content .contain {
+.classic .left-content .contain {
   padding: 12px 10px 12px 20px;
   font-weight: 600;
 }
-.left-content .contain .code {
+.classic .left-content .contain .code {
   font-weight: 400;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.right-content .contain {
+.classic .right-content .contain {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.right-content .contain .code {
+.classic .right-content .contain .code {
   font-size: 12px;
   font-weight: 400;
 }
 
-.right-content .btn {
+.classic .right-content .btn {
   padding: 6px;
   border: 1px solid black;
   min-width: 80px;
@@ -117,16 +117,16 @@ svg{
   align-items: center;
   justify-content: center;
 }
-.right-content .apply {
+.classic .right-content .apply {
   background-color: black;
   color: white;
 }
-.right-content .applied {
+.classic .right-content .applied {
   background-color: white;
   color: black;
 }
 
-.divider{
+.classic .divider{
   position: absolute;
   top: 0;
   /* 右边区域宽度 */
@@ -137,69 +137,50 @@ svg{
   overflow: visible;
 }
 
-.small-corner {
+.classic .small-corner {
   position: absolute;
 }
-.small-corner.lt {
+.classic .small-corner.lt {
   left: -1px;
   top: -3px;
   transform: rotateY(180deg);
 }
-.small-corner.rt {
+.classic .small-corner.rt {
   right: -1px;
   top: -3px;
 }
-.small-corner.lb {
+.classic .small-corner.lb {
   left: -1px;
   bottom: -3px;
   transform: rotate(180deg);
 }
-.small-corner.rb {
+.classic .small-corner.rb {
   right: -1px;
   bottom: -3px;
   transform: rotateX(180deg);
 }
 
 @media screen and (min-width: 750px) {
-  .left-content .msg {
+  .classic .left-content .msg {
     font-size: 20px;
     line-height: 22px;
   }
-  .left-content .code {
+  .classic .left-content .code {
     display: none;
   }
 }
 @media screen and (max-width: 750px) {
-  .left-content .contain {
+  .classic .left-content .contain {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
   }
-  .left-content .msg {
+  .classic .left-content .msg {
     font-size: 16px;
     line-height: 22px;
   }
-  .right-content .code {
+  .classic .right-content .code {
     display: none;
   }
-}
-
-.copy-success-toast {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 12px;
-  background-color: rgba(0, 0, 0, 0.9);
-  transition: all 1s;
-  font-size: 14px;
-  line-height: 14px;
-  color: white;
-  white-space: nowrap;
-}
-.toast-show {
-  display: block;
 }

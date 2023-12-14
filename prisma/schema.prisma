@@ -53,6 +53,7 @@ model DiscountCode {
 
   shopifyDiscountCodeId String
   shop                  String
+  code                  String?
 
   useGlobalConfig Boolean @default(true)
   show            Boolean @default(false)

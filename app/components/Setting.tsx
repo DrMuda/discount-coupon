@@ -153,6 +153,7 @@ export default function Setting({
         useGlobalConfig,
         whichPage,
         shopifyDiscountCodeId: id,
+        code,
       };
       params.show = showDiscountCode;
       const res = (await api
@@ -178,6 +179,7 @@ export default function Setting({
     showDiscountCode,
     useGlobalConfig,
     whichPage,
+    code,
   ]);
 
   useEffect(() => {

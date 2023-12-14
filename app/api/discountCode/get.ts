@@ -18,6 +18,7 @@ export interface IDiscountCode {
   leftText: string | null;
   /** 作用于哪个页面 1. 商品详情页, 2. 购物车页面 */
   whichPage: number;
+  code: string | null;
   createdAt: string;
 }
 export type TGetDiscountCodeParams = Partial<
