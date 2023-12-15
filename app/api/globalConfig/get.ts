@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs } from '@remix-run/node';
 import { type IResult, getUrlParams, publicLoader } from '~/utils';
+import prisma from '../../db.server';
 
 export interface IGlobalConfig {
   id: number;

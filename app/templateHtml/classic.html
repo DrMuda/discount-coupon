@@ -1,4 +1,4 @@
-<div class="classic">
+<div class="classic {{ codeMd5 }}" style="display: none; background-color: {{ codeBgColor }};">
   <svg width="0" height="0" style="display: none">
     <!-- 定义第一个图标 -->
     <symbol
@@ -50,37 +50,67 @@
     </symbol>
   </svg>
 
-  <svg width="5" height="178" class="left border">
+  <svg
+    width="5"
+    height="178"
+    style="background-color: {{ codeBgColor }};"
+    class="left border"
+  >
     <use xlink:href="#leftBorder" />
   </svg>
-  <svg width="5" height="178" class="right border">
+  <svg
+    width="5"
+    height="178"
+    style="background-color: {{ codeBgColor }};"
+    class="right border"
+  >
     <use xlink:href="#leftBorder" />
   </svg>
 
-  <svg width="12" height="12" class="lt big-corner">
+  <svg
+    width="12"
+    height="12"
+    style="background-color: {{ codeBgColor }};"
+    class="lt big-corner"
+  >
     <use xlink:href="#leftTopBigCorner" />
   </svg>
-  <svg width="12" height="12" class="rt big-corner">
+  <svg
+    width="12"
+    height="12"
+    style="background-color: {{ codeBgColor }};"
+    class="rt big-corner"
+  >
     <use xlink:href="#leftTopBigCorner" />
   </svg>
-  <svg width="12" height="12" class="lb big-corner">
+  <svg
+    width="12"
+    height="12"
+    style="background-color: {{ codeBgColor }};"
+    class="lb big-corner"
+  >
     <use xlink:href="#leftTopBigCorner" />
   </svg>
-  <svg width="12" height="12" class="rb big-corner">
+  <svg
+    width="12"
+    height="12"
+    style="background-color: {{ codeBgColor }};"
+    class="rb big-corner"
+  >
     <use xlink:href="#leftTopBigCorner" />
   </svg>
 
   <div class="left-content height-content">
     <div class="contain">
-      <span class="msg">{{ leftText }}</span>
-      <span class="code">Code: {{ discountCouponCode }}</span>
+      <span class="msg" style="color: {{ textColor }};">{{ leftText }}</span>
+      <span class="code" style="color: {{ codeColor }};">Code: {{ code }}</span>
     </div>
   </div>
 
   <div class="left-content">
     <div class="contain">
-      <span class="msg">{{ leftText }}</span>
-      <span class="code">Code: {{ discountCouponCode }}</span>
+      <span class="msg" style="color: {{ textColor }};">{{ leftText }}</span>
+      <span class="code" style="color: {{ codeColor }};">Code: {{ code }}</span>
     </div>
   </div>
   <div class="divider">
@@ -99,13 +129,18 @@
   </div>
   <div class="right-content">
     <div class="contain">
-      <span class="code">discountCouponCode</span>
-      <button class="apply btn" onclick='classicHandleClickApply("code")'>
+      <span class="code" style="color: {{ codeColor }};">{{ code }}</span>
+      <button
+        class="apply btn"
+        onclick="handleApply('{{ code }}', '{{ codeMd5 }}')"
+        style="border-color: {{ btnBgColor }}; background-color: {{ btnBgColor }}; color: {{ btnTextColor }};"
+      >
         APPLY
       </button>
       <button
         class="applied btn none"
-        onclick='classicHandleClickApply("code")'
+        onclick="handleApply('{{ code }}', '{{ codeMd5 }}')"
+        style="border-color: {{ btnBgColor }}; background-color: {{ btnBgColor }}; color: {{ btnTextColor }};"
       >
         APPLIED
       </button>

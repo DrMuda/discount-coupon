@@ -19,6 +19,7 @@ import type {
 import { IoArrowBackSharp } from 'react-icons/io5';
 import { Button } from '@shopify/polaris';
 import { links as ClassicLinks } from '~/components/PreviewTemplate/Classic';
+import prisma from '../db.server';
 
 export const links = () => [...ClassicLinks()];
 

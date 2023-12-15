@@ -4,28 +4,27 @@
 {% capture classicCss %}
   {{ 'classic.css' | asset_url }}
 {% endcapture %}
-{% capture classicHtml %}
-  {{ 'classic.html' | asset_url }}
-{% endcapture %}
-{% capture multipleDiscountContain %}
-  {{ 'multipleDiscountContain.html'| asset_url }}
-{% endcapture %}
 
 <head>
+  <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js' defer></script>
   <script src='{{ 'index.js' | asset_url }}' defer></script>
-  <script src='{{ 'axios.js' | asset_url }}' defer></script>
-  <script src='{{ 'classic.js' | asset_url }}' defer></script>
-  {{ 'classic.css' | asset_url | stylesheet_tag }}
+  <script src='{{ 'template.js' | asset_url }}' defer></script>
+  <script src='{{ 'md5.js' | asset_url }}' defer></script>
+  <script src='{{ 'multipleDiscountContain.js' | asset_url }}' defer></script>
   {{ 'global.css' | asset_url | stylesheet_tag }}
+  {{ 'multipleDiscountContain.css' | asset_url | stylesheet_tag }}
 </head>
 
 <div id='discount-coupon-container'>
   <div class='variable'>
     <div id='classicJs'>{{ classicJs }}</div>
     <div id='classicCss'>{{ classicCss }}</div>
-    <div id='classicHtml'>{{ classicHtml }}</div>
-    <div id='multipleDiscountContain'>{{ multipleDiscountContain }}</div>
+    <div id='cartId'>{{ cart.token }}</div>
   </div>
+  {% comment %} <button onclick='console.log({{ cart.discount_applications | json}})'>折扣</button>
+  {% for discount_application in cart.discount_applications %}
+    Discount name: {{ discount_application.title }} Savings: -{{ discount_application.total_allocated_amount | money }}
+  {% endfor %} {% endcomment %}
 </div>
 
 {% schema %}

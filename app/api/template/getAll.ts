@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs } from '@remix-run/node';
 import { type IResult, publicLoader } from '~/utils';
+import prisma from '../../db.server';
 
 export interface ITemplate {
   id: number;

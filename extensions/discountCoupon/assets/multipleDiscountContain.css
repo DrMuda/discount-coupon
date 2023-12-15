@@ -1,0 +1,105 @@
+.multiple-discount-contain {
+  display: flex !important;
+  font-size: 16px;
+  position: relative;
+  align-items: center;
+  background-color: #f5f5f5;
+  width: 100%;
+  padding: 0 16px;
+  max-width: 438px;
+  min-height: 80px;
+  gap: 16px;
+  z-index: 1000;
+}
+.multiple-discount-contain * {
+  box-sizing: border-box;
+}
+.multiple-discount-contain .left-content {
+  flex: 1;
+}
+.multiple-discount-contain .left-content .title {
+  font: bold;
+}
+.multiple-discount-contain .left-content .code {
+  font-size: 14px;
+  color: #727272;
+}
+.multiple-discount-contain .apply,
+.multiple-discount-contain .applied {
+  padding: 0 8px;
+  background-color: #dfe9f1;
+  color: #4e86b6;
+  text-align: center;
+  height: 24px;
+  line-height: 24px;
+  width: fit-content;
+  cursor: pointer;
+  border: none;
+}
+.multiple-discount-contain .none {
+  display: none;
+}
+.multiple-discount-contain .more {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+.multiple-discount-contain .more .icon {
+  width: 16px;
+  height: 16px;
+  transition: all 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.multiple-discount-contain .more.active .icon {
+  transform: rotate(180deg);
+}
+.multiple-discount-contain .more-content {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.multiple-discount-contain .more-content-contain {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+.multiple-discount-contain .more-content-contain .more-content-mask {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.multiple-discount-contain .more-content-contain .more-content {
+  z-index: 2;
+  background-color: white;
+  position: absolute;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px #727272;
+  min-width: 350px;
+}
+.multiple-discount-contain .more-content-contain.active {
+  display: block;
+}
+@media screen and (max-width: 750px) {
+  .multiple-discount-contain .apply,
+  .multiple-discount-contain .applied {
+    display: none;
+  }
+  .multiple-discount-contain .more-content {
+    width: 100vw !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    height: fit-content !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}

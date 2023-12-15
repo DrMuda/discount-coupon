@@ -1,6 +1,7 @@
 import { type ActionFunctionArgs } from '@remix-run/node';
 import { type IDiscountCode } from '~/api/discountCode/get';
 import { type IResult } from '~/utils';
+import prisma from '../../db.server';
 
 export type TUpsertDiscountCodeParams = Required<IDiscountCode>;
 export type TUpsertDiscountCodeRes = IResult<IDiscountCode | null | unknown>;

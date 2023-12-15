@@ -1,4 +1,4 @@
-.classic svg{
+.classic svg {
   color: black;
   fill: black;
 }
@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 .classic {
+  display: block !important;
   min-height: 80px;
   border: 3px solid black;
   width: 100%;
@@ -120,13 +121,15 @@
 .classic .right-content .apply {
   background-color: black;
   color: white;
+  cursor: pointer;
 }
 .classic .right-content .applied {
   background-color: white;
   color: black;
+  cursor: pointer;
 }
 
-.classic .divider{
+.classic .divider {
   position: absolute;
   top: 0;
   /* 右边区域宽度 */

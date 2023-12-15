@@ -333,7 +333,7 @@ export default function Setting({
                       <Icon source={TickMinor} />
                     </div>
                     <img
-                      src={`${templatePreviewDir}/${name}.png`}
+                      src={`${templatePreviewDir}/${name.toLowerCase()}.png`}
                       alt={name}
                       className="w-full object-contain rounded-t-[5px]"
                     />
@@ -533,7 +533,7 @@ export default function Setting({
                     <div className="text-slate-200 text-[26px] mb-4 font-bold">
                       $$$$
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-4 w-[300px]">
                       <Classic
                         btnBgColor={colorConfig?.btnBgColor || undefined}
                         btnTextColor={colorConfig?.btnTextColor || undefined}

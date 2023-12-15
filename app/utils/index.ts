@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, json, ActionFunctionArgs } from '@remix-run/node';
+import { type LoaderFunctionArgs, json, type ActionFunctionArgs } from '@remix-run/node';
 import dayjs from 'dayjs';
 import { EEffectStatus, type ITableRowData } from '~/routes/app._index';
 

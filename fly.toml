@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for discount-coupon on 2023-11-15T11:54:08+08:00
+# fly.toml app configuration file generated for discount-conpon-dev on 2023-12-14T11:09:36+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "discount-coupon"
+app = "discount-conpon-dev"
 primary_region = "hkg"
 
 [build]
@@ -11,8 +11,8 @@ primary_region = "hkg"
 [env]
   PORT = "3000"
   SCOPES = "write_products,read_price_rules,write_price_rules"
-  SHOPIFY_API_KEY = "430caf72a8563b14feacbc61e0742aab"
-  SHOPIFY_APP_URL = "https://discount-coupon.fly.dev"
+  SHOPIFY_API_KEY = "bd5542982f50074b1c0483c0012ea633"
+  SHOPIFY_APP_URL = "https://discount-conpon-dev.fly.dev"
 
 [http_service]
   internal_port = 3000

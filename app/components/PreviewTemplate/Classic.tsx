@@ -187,7 +187,9 @@ export default function Classic({
       </div>
       <div className="right-content">
         <div className="contain">
-          <span className="code">{code}</span>
+          <span className="code" style={{ color: codeColor }}>
+            {code}
+          </span>
           <button
             style={{
               borderColor: btnBgColor,
@@ -200,6 +202,7 @@ export default function Classic({
           </button>
           <button
             style={{
+              borderColor: btnBgColor,
               backgroundColor: btnBgColor,
               color: btnTextColor,
             }}
