@@ -42,9 +42,17 @@ const ColorSetting = ({
   text,
   ...colorPickerProps
 }: { text?: string } & ColorPickerProps) => {
+  // remix框架貌似和 antd 不太兼容， 当切换到此页面后， 然后刷新页面 ColorPicker 就会报错， 所以延时到下一帧再渲染 ColorPicker
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowColorPicker(true);
+    }, 0);
+  }, []);
+
   return (
     <div className="flex gap-1 items-center">
-      <ColorPicker {...colorPickerProps} />
+      {showColorPicker && <ColorPicker {...colorPickerProps} />}
       {text}
     </div>
   );
