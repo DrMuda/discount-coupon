@@ -1,4 +1,4 @@
-const baseUrl = 'https://lighting-walked-suzuki-survival.trycloudflare.com';
+const baseUrl = 'https://discount-conpon-dev.fly.dev';
 const cosDomain =
   'https://revasocialmedia-1307444343.cos.accelerate.myqcloud.com';
 const templatePreviewDir = `${cosDomain}/shopify_discount/template_preview`;

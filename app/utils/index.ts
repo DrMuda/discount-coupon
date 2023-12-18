@@ -1,4 +1,8 @@
-import { type LoaderFunctionArgs, json, type ActionFunctionArgs } from '@remix-run/node';
+import {
+  type LoaderFunctionArgs,
+  json,
+  type ActionFunctionArgs,
+} from '@remix-run/node';
 import dayjs from 'dayjs';
 import { EEffectStatus, type ITableRowData } from '~/routes/app._index';
 
@@ -119,4 +123,24 @@ export const showToast = ({
 export const defaultCatch = (error: any) => {
   console.error(error);
   return null;
+};
+
+// 获取url上用于验证的参数
+export const getUrlSessionParams = () => {
+  const { embedded, hmac, host, id_token, locale, session, shop, timestamp } =
+    getUrlParams(location.href);
+  const params = {
+    embedded,
+    hmac,
+    host,
+    id_token,
+    locale,
+    session,
+    shop,
+    timestamp,
+  };
+  const search = Object.entries(params)
+    .map(([key, value]) => `${key}=${value || ''}`)
+    .join('&');
+  return { params, search };
 };

@@ -17,10 +17,32 @@ async function handleApply(discountCouponCode, codeMd5) {
     appliedBtn.className = 'applied btn';
   });
 
-
   if (whichPage === 2) {
-    console.log(window.Shopify.routes.root);
-    return
+    fetch(window.Shopify.routes.root + 'cart.js');
+    // 44254330355933
+    // 44254330650845
+    const updates = {
+      line: 1,
+      // id: 44254330912989,
+      // discounts: [{ amount: 14999, title: '订单降价' }],
+      discounts: [],
+    };
+
+    fetch(window.Shopify.routes.root + 'cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    return;
   }
 
   // 商品详情页才需要复制及提示

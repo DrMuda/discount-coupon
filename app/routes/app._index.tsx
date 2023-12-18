@@ -24,6 +24,7 @@ import {
   isNil,
   mapToOptions,
   defaultCatch,
+  getUrlSessionParams,
 } from '~/utils';
 import dayjs, { type Dayjs } from 'dayjs';
 import { CancelMinor, TickMinor } from '@shopify/polaris-icons';
@@ -295,8 +296,11 @@ export default function Index() {
           id={discountCode.id.toString()}
           position={index}
           onClick={() => {
+            const { search } = getUrlSessionParams();
             navigate(
-              `setting?id=${discountCode.id}&code=${encodeURIComponent(
+              `setting?${search}&id=${
+                discountCode.id
+              }&code=${encodeURIComponent(
                 discountCode.code || ''
               )}&title=${encodeURIComponent(discountCode.title || '')}`
             );
@@ -360,7 +364,8 @@ export default function Index() {
             variant="primary"
             size="large"
             onClick={() => {
-              navigate(`setting?id=global`);
+              const { search } = getUrlSessionParams();
+              navigate(`setting?${search}&id=global`);
             }}
           >
             样式设置

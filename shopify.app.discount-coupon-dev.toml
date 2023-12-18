@@ -2,7 +2,7 @@
 
 name = "Discount Coupon Dev"
 client_id = "bd5542982f50074b1c0483c0012ea633"
-application_url = "https://lighting-walked-suzuki-survival.trycloudflare.com"
+application_url = "https://gun-distribute-processed-worthy.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_price_rules,write_price_rules"
 
 [auth]
 redirect_urls = [
-  "https://lighting-walked-suzuki-survival.trycloudflare.com/auth/callback",
-  "https://lighting-walked-suzuki-survival.trycloudflare.com/auth/shopify/callback",
-  "https://lighting-walked-suzuki-survival.trycloudflare.com/api/auth/callback",
-  "https://lighting-walked-suzuki-survival.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://gun-distribute-processed-worthy.trycloudflare.com/auth/callback",
+  "https://gun-distribute-processed-worthy.trycloudflare.com/auth/shopify/callback",
+  "https://gun-distribute-processed-worthy.trycloudflare.com/api/auth/callback",
+  "https://gun-distribute-processed-worthy.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

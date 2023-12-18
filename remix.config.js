@@ -24,6 +24,7 @@ module.exports = {
       route('/api/globalConfig/get', 'api/globalConfig/get.ts');
       route('/api/globalConfig/upsert', 'api/globalConfig/upsert.ts');
       route('/api/template/getAll', 'api/template/getAll.ts');
+      route('/api/template/upsert', 'api/template/upsert.ts');
     });
   },
 };
